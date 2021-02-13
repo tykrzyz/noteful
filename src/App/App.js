@@ -4,8 +4,8 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
-import dummyStore from '../dummy-store';
 import {getNotesForFolder, findNote, findFolder} from '../notes-helpers';
+import ApiContext from '../ApiContext'
 import './App.css';
 
 class App extends Component {
@@ -15,8 +15,58 @@ class App extends Component {
     };
 
     componentDidMount() {
-        // fake date loading from API call
-        setTimeout(() => this.setState(dummyStore), 600);
+        let folders = [];
+        let notes = [];
+        const baseUrl = 'http://localhost:9090';
+        const options = {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+        };
+
+        fetch(`${baseUrl}/folders`, options)
+        .then(res => {
+            if(!res.ok) {
+            throw new Error('Something went wrong, please try again later.');
+            }
+            return res;
+        })
+        .then(res => res.json())
+        .then(data => {
+            folders = data
+        })
+        .catch(err => {
+            this.setState({
+            error: err.message
+            });
+        });
+
+        fetch(`${baseUrl}/notes`, options)
+        .then(res => {
+            if(!res.ok) {
+            throw new Error('Something went wrong, please try again later.');
+            }
+            return res;
+        })
+        .then(res => res.json())
+        .then(data => {
+            notes = data
+            this.setState(
+            {
+                folders: folders,
+                notes, notes
+            }
+        )
+        })
+        .catch(err => {
+            this.setState({
+            error: err.message
+            });
+        });
+
+       
+        console.log(this.state)
     }
 
     renderNavRoutes() {
@@ -89,16 +139,23 @@ class App extends Component {
     }
 
     render() {
+        const value = {
+            notes: this.state.notes,
+            folders: this.state.folders,
+            deleteNote: this.handleDeleteNote
+        };
         return (
-            <div className="App">
-                <nav className="App__nav">{this.renderNavRoutes()}</nav>
-                <header className="App__header">
-                    <h1>
-                        <Link to="/">Noteful</Link>{' '}
-                    </h1>
-                </header>
-                <main className="App__main">{this.renderMainRoutes()}</main>
-            </div>
+            <ApiContext.Provider value={value}>
+                <div className="App">
+                    <nav className="App__nav">{this.renderNavRoutes()}</nav>
+                    <header className="App__header">
+                        <h1>
+                            <Link to="/">Noteful</Link>{' '}
+                        </h1>
+                    </header>
+                    <main className="App__main">{this.renderMainRoutes()}</main>
+                </div>
+            </ApiContext.Provider>
         );
     }
 }
