@@ -6,13 +6,17 @@ import ApiContext from '../ApiContext'
 import './Note.css'
 
 export default class Note extends React.Component {
-  static defaultProps ={
+    static contextType = ApiContext;
+    static defaultProps ={
     onDeleteNote: () => {},
+    match: {
+      params: {}
+    }
   }
-  static contextType = ApiContext;
 
   handleClickDelete = e => {
     e.preventDefault()
+    this.props.history.push('/')
     const noteId = this.props.id
 
     fetch(`http://localhost:9090/notes/${noteId}`, {
