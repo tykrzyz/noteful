@@ -19,8 +19,6 @@
 }
 
 .NoteListNav__folder-link {
-  background-color: #030f1f;
-  color: #b5b3b3;
   display: block;
   font-family: var(--custom-font);
   font-size: 20px;
@@ -29,12 +27,12 @@
   padding: 8px 16px;
   text-decoration: none;
 }
-.NoteListNav__folder-link:hover {
-  color: #FFB72F;
+.NoteListNav__folder-link {
+  color: black;
   cursor: pointer;
 }
 .NoteListNav__folder-link.active {
-  background-color: #102541;
+  background-color: lightblue;
 }
 
 .NoteListNav__num-notes {
