@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ApiContext from '../ApiContext'
 import './Note.css'
+import { BASE_URL } from '../config'
 
 export default class Note extends React.Component {
     static contextType = ApiContext;
@@ -19,7 +20,7 @@ export default class Note extends React.Component {
     this.props.history.push('/')
     const noteId = this.props.id
 
-    fetch(`http://localhost:9090/notes/${noteId}`, {
+    fetch(`${BASE_URL}/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'

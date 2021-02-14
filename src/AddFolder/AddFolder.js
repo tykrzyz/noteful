@@ -1,5 +1,6 @@
 import React from 'react';
 import ApiContext from '../ApiContext';
+import { BASE_URL } from '../config';
 import InputError from '../InputError';
 
 export default class AddFolder extends React.Component{
@@ -14,7 +15,7 @@ export default class AddFolder extends React.Component{
     const addFolder = e => {
       e.preventDefault();
       this.props.history.push('/')
-      fetch(`http://localhost:9090/folders`, {
+      fetch(`${BASE_URL}/folders`, {
         'method': 'POST',
         'body': JSON.stringify({
           'name': e.target.folderNameInput.value

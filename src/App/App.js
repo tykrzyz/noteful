@@ -8,6 +8,7 @@ import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
 import './App.css';
+import { BASE_URL } from '../config';
 
 class App extends Component {
     state = {
@@ -17,8 +18,8 @@ class App extends Component {
 
     componentDidMount() {
         Promise.all([
-            fetch(`http://localhost:9090/notes`),
-            fetch(`http://localhost:9090/folders`)
+            fetch(`${BASE_URL}/notes`),
+            fetch(`${BASE_URL}/folders`)
         ])
             .then(([notesRes, foldersRes]) => {
                 if (!notesRes.ok)

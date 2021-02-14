@@ -1,5 +1,6 @@
 import React from 'react';
 import ApiContext from '../ApiContext';
+import { BASE_URL } from '../config';
 import InputError from '../InputError';
 
 export default class AddNote extends React.Component{
@@ -15,7 +16,7 @@ export default class AddNote extends React.Component{
     const addNote = e => {
       e.preventDefault();
       this.props.history.push(`/folder/${folderId}`)
-      fetch(`http://localhost:9090/notes`, {
+      fetch(`${BASE_URL}/notes`, {
         'method': 'POST',
         'body': JSON.stringify({
           'name': e.target.noteNameInput.value,
@@ -38,7 +39,7 @@ export default class AddNote extends React.Component{
       return <option key={folder.id} value = {folder.Id} name={folder.name}>{folder.name}</option>
     })
 
-    let folderId = this.context.folders[0] || 0;
+    let folderId = this.context.folders[0].id || 0;
     const handleSelectChange = e => {
       folderId = this.context.folders.find(folder => e.target.value === folder.name).id
     }
