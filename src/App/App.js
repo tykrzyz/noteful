@@ -7,7 +7,6 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
-import InputError from '../InputError';
 import './App.css';
 
 class App extends Component {
